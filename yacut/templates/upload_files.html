@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}YaCut - Загрузка файлов{% endblock title %}
+{% block content %}
+<main>
+  <section class="container my-5 px-4">
+    <h1 class="text-center"><span style="color:red">Ya</span>Cut</h1>
+    	<p class="text-center my-4">
+    	  Загрузите файлы и получи на них короткие ссылки
+    	</p>
+    <div class="container">
+        <div class="row my-3">
+          <div class="col-sm">
+          </div>
+          <div class="col-md-6 mx-auto">
+            <form method="POST" enctype="multipart/form-data">
+                {{ form.csrf_token }}
+            
+                {{ form.file(class="form-control from-control-lg py-2 mb-3") }}
+                {% if form.file.errors %}
+                  <p class="text-danger text-center">
+                    {% for error in form.file.errors %}
+                      {{ error }}
+                    {% endfor %}
+                  </p>
+                {% endif %}
+                
+                {{ form.submit(class="btn btn-primary") }}
+            </form>
+          {% if file_url_pairs %}
+            <div class="row mt-4">
+                <div class="col-12">
+                    {% for file, url in file_url_pairs %}
+                    <div class="d-flex justify-content-between align-items-center border rounded p-3 mb-2">
+                        <span>{{ file.filename }}</span>
+                        <a href="{{ url_for('redirect_view', short=url) }}">{{ request.host_url }}{{ url }}</a>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+          {% endif %}
+					</div>
+					<div class="col-sm">
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+{% endblock content %}

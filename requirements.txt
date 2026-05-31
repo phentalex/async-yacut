@@ -45,3 +45,5 @@ Werkzeug==3.0.0
 WTForms==3.0.1
 yarl==1.9.9
 zipp==3.18.1
+urllib3==2.7.0
+flasgger
