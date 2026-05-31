@@ -15,10 +15,10 @@
             <form method="POST" enctype="multipart/form-data">
                 {{ form.csrf_token }}
             
-                {{ form.file(class="form-control from-control-lg py-2 mb-3") }}
-                {% if form.file.errors %}
+                {{ form.files(class="form-control from-control-lg py-2 mb-3") }}
+                {% if form.files.errors %}
                   <p class="text-danger text-center">
-                    {% for error in form.file.errors %}
+                    {% for error in form.files.errors %}
                       {{ error }}
                     {% endfor %}
                   </p>

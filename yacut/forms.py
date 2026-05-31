@@ -32,7 +32,7 @@ class URLForm(FlaskForm):
 class UploadFileForm(FlaskForm):
     """Форма для загрузки файлов."""
 
-    file = MultipleFileField(
+    files = MultipleFileField(
         'Выберите файлы для загрузки',
         validators=[
             FileRequired(message='Пожалуйста, выберите хотя бы один файл.'),

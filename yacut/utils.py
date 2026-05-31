@@ -5,6 +5,9 @@ from .models import URLMap
 from .constants import AUTO_GENERATED_ID_LENGTH
 
 
+RESERVED_SHORT_IDS = {'files'}
+
+
 def generate_short_id(length=AUTO_GENERATED_ID_LENGTH):
     """Генерирует случайный короткий идентификатор."""
     characters = ascii_letters + digits
@@ -14,6 +17,8 @@ def generate_short_id(length=AUTO_GENERATED_ID_LENGTH):
 def get_unique_short_id(custom_id=None):
     """Проверяет, что идентификатор уникален либо генерирует новый."""
     if custom_id:
+        if custom_id in RESERVED_SHORT_IDS:
+            return None
         if len(custom_id) > 16 or not all(
             c in ascii_letters + digits for c in custom_id
         ):

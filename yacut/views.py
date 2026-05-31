@@ -41,13 +41,13 @@ def index_view():
     return render_template('main.html', form=form)
 
 
-@app.route('/upload', methods=['GET', 'POST'])
+@app.route('/files', methods=['GET', 'POST'])
 async def upload_files_view():
     """Страница для загрузки файлов."""
     form = UploadFileForm()
 
     if form.validate_on_submit():
-        files = form.file.data
+        files = form.files.data
         urls = await async_upload_files_to_yandex_disk(files)
         short_urls = []
         for url in urls:
