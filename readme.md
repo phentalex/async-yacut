@@ -1,60 +1,84 @@
-### Как запустить проект Yacut:
+# YaCut
 
-Клонировать репозиторий и перейти в него в командной строке:
+Сервис для сокращения ссылок и хранения файлов на Яндекс.Диске. Пользователи могут создавать короткие ссылки вручную или с автогенерацией, а также загружать файлы и получать на них короткие ссылки.
 
-```
-git clone 
-```
+## Возможности
 
-```
-cd yacut
-```
+- Создание коротких ссылок с пользовательским идентификатором или автогенерацией
+- Загрузка файлов на Яндекс.Диск с получением короткой ссылки
+- REST API для управления ссылками
+- Редирект по короткой ссылке на оригинальный URL
 
-Cоздать и активировать виртуальное окружение:
+## Стек
 
-```
-python3 -m venv venv
-```
+- Python 3.12
+- Flask
+- Flask-SQLAlchemy
+- Flask-Migrate
+- Flask-WTF
+- aiohttp
+- SQLite
+- Яндекс.Диск API
 
-* Если у вас Linux/macOS
+## Переменные окружения
 
-    ```
-    source venv/bin/activate
-    ```
+Создай файл `.env` в корне проекта:
 
-* Если у вас windows
-
-    ```
-    source venv/scripts/activate
-    ```
-
-Установить зависимости из файла requirements.txt:
-
-```
-python3 -m pip install --upgrade pip
+```env
+SECRET_KEY=your-secret-key
+DATABASE_URI=sqlite:///db.sqlite3
+DISK_TOKEN=your-yandex-disk-oauth-token
+YADISK_APP=yacut
 ```
 
-```
+Токен Яндекс.Диска получается через [oauth.yandex.ru](https://oauth.yandex.ru). Приложению необходимы права `cloud_api:disk.app_folder`
+
+## Запуск локально
+
+```bash
+git clone https://github.com/phentalex/async-yacut.git
+cd async-yacut
+python -m venv venv
+
+# Linux/macOS
+source venv/bin/activate
+
+# Windows
+source venv/Scripts/activate
+
 pip install -r requirements.txt
-```
-
-Создать в директории проекта файл .env с четыремя переменными окружения:
-
-```
-FLASK_APP=yacut
-FLASK_ENV=development
-SECRET_KEY=your_secret_key
-DB=sqlite:///db.sqlite3
-```
-
-Создать базу данных и применить миграции:
-
-```
 flask db upgrade
-```
-
-Запустить проект:
-
-```
 flask run
 ```
+
+Доступно здесь → http://localhost:5000
+
+## API эндпоинты
+
+| Метод | URL | Описание |
+|-------|-----|----------|
+| POST | `/api/id/` | Создать короткую ссылку |
+| GET | `/api/id/<short_id>/` | Получить оригинальную ссылку |
+
+### Пример запроса
+
+```json
+POST /api/id/
+{
+    "url": "https://example.com",
+    "custom_id": "my-link"
+}
+```
+
+### Пример ответа
+
+```json
+{
+    "url": "https://example.com",
+    "short_link": "http://localhost:5000/my-link"
+}
+```
+
+## Автор
+
+**Александр Уваров** — [GitHub](https://github.com/phentalex)
