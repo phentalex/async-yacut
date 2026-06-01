@@ -8,6 +8,7 @@ from . import db
 from .constants import (
     AUTO_GENERATED_ID_LENGTH, MAX_GENERATION_ATTEMPTS
 )
+from .exceptions import CustomIDGenerationError
 from .validators import validate_custom_id
 
 
@@ -56,7 +57,7 @@ class URLMap(db.Model):
             short_id = URLMap.generate_short_id()
             if not URLMap.get_by_short_id(short_id):
                 return short_id
-        raise ValueError(
+        raise CustomIDGenerationError(
             'Не удалось сгенерировать уникальную короткую ссылку.'
         )
 

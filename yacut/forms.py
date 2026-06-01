@@ -3,7 +3,7 @@ from flask_wtf.file import FileRequired
 from wtforms import MultipleFileField, StringField, SubmitField, URLField
 from wtforms.validators import DataRequired, Length, Optional, Regexp, URL
 
-from .constants import CUSTOM_ID_MAX_LENGTH
+from .constants import CUSTOM_ID_MAX_LENGTH, REGEX_CUSTOM_ID
 
 
 class URLForm(FlaskForm):
@@ -25,7 +25,7 @@ class URLForm(FlaskForm):
                          f' - {CUSTOM_ID_MAX_LENGTH} символов.')
             ),
             Regexp(
-                r'^[a-zA-Z0-9]+$',
+                REGEX_CUSTOM_ID,
                 message='Идентификатор может содержать '
                         'только латинские буквы и цифры.'
             ),

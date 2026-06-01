@@ -3,28 +3,28 @@
 {% block content %}
   <section class="container my-5 px-4">
     <h1 class="text-center"><span style="color:red">Ya</span>Cut</h1>
-    	<p class="text-center my-4">
-    	  Загрузите файлы и получи на них короткие ссылки
-    	</p>
+      <p class="text-center my-4">
+        Загрузите файлы и получи на них короткие ссылки
+      </p>
     <div class="container">
       <div class="row my-3">
         <div class="col-sm">
         </div>
         <div class="col-md-7 mx-auto">
           <form method="POST" enctype="multipart/form-data">
-              {{ form.csrf_token }}
-              {{ form.files(class="form-control from-control-lg py-2 mb-3") }}
-              <p class="text-danger text-center">
-                {% for error in form.files.errors %}
-                  {{ error }}
-                {% endfor %}
-              </p>
-              {{ form.submit(class="btn btn-primary") }}
-              {% with messages = get_flashed_messages() %}
-                {% for message in messages %}
-                  {{ message }}
-                {% endfor %}
-              {% endwith %}
+            {{ form.csrf_token }}
+            {{ form.files(class="form-control from-control-lg py-2 mb-3") }}
+            <p class="text-danger text-center">
+              {% for error in form.files.errors %}
+                {{ error }}
+              {% endfor %}
+            </p>
+            {{ form.submit(class="btn btn-primary") }}
+            {% with messages = get_flashed_messages() %}
+              {% for message in messages %}
+                {{ message }}
+              {% endfor %}
+            {% endwith %}
           </form>
           {% if file_url_pairs %}
             <div class="row mt-4">
@@ -38,10 +38,10 @@
               </div>
             </div>
           {% endif %}
-				</div>
-				<div class="col-sm">
-				</div>
-			</div>
-		</div>
-	</section>
+        </div>
+        <div class="col-sm">
+        </div>
+      </div>
+    </div>
+  </section>
 {% endblock content %}

@@ -3,9 +3,9 @@
 {% block content %}
   <section class="container my-5 px-4">
     <h1 class="text-center"><span style="color:red">Ya</span>Cut</h1>
-    	<p class="text-center my-4">
-    	  Создайте короткую ссылку автоматически или предложите свой вариант
-    	</p>
+      <p class="text-center my-4">
+        Создайте короткую ссылку автоматически или предложите свой вариант
+      </p>
     <div class="container">
       <div class="row my-3">
         <div class="col-sm">
@@ -32,20 +32,20 @@
               {% endfor %}
             {% endwith %}
           </form>
-  		    {% if short_url %}
-  			    <div class="row mt-4">
-  			      <div class="col-md-7 mx-auto">
-  			          <div class="d-flex justify-content-between align-items-center border rounded p-3">
-  			              <span>Новая ссылка:</span>
-  			              <a href="{{ short_url }}" target="_blank">{{ short_url }}</a>
-  			          </div>
-  			      </div>
-  			    </div>
-  		    {% endif %}
-  			</div>
-  			<div class="col-sm">
-  			</div>
-  		</div>
-  	</div>
+          {% if short_url %}
+            <div class="row mt-4">
+              <div class="col-md-7 mx-auto">
+                  <div class="d-flex justify-content-between align-items-center border rounded p-3">
+                      <span>Новая ссылка:</span>
+                      <a href="{{ short_url }}" target="_blank">{{ short_url }}</a>
+                  </div>
+              </div>
+            </div>
+          {% endif %}
+        </div>
+        <div class="col-sm">
+        </div>
+      </div>
+    </div>
   </section>
 {% endblock content %}
