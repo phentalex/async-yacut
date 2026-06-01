@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileRequired
 from wtforms import MultipleFileField, StringField, SubmitField, URLField
-from wtforms.validators import DataRequired, Length, URL
+from wtforms.validators import DataRequired, Length, Optional, Regexp, URL
 
 from .constants import CUSTOM_ID_MAX_LENGTH
 
@@ -23,7 +23,13 @@ class URLForm(FlaskForm):
                 max=CUSTOM_ID_MAX_LENGTH,
                 message=(f'Максимальная длина идентификатора'
                          f' - {CUSTOM_ID_MAX_LENGTH} символов.')
-            )
+            ),
+            Regexp(
+                r'^[a-zA-Z0-9]+$',
+                message='Идентификатор может содержать '
+                        'только латинские буквы и цифры.'
+            ),
+            Optional()
         ]
     )
     submit = SubmitField('Создать')

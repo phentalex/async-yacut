@@ -1,53 +1,51 @@
 {% extends "base.html" %}
 {% block title %}YaCut - укоротитель ссылок{% endblock title %}
 {% block content %}
-<main>
   <section class="container my-5 px-4">
     <h1 class="text-center"><span style="color:red">Ya</span>Cut</h1>
     	<p class="text-center my-4">
     	  Создайте короткую ссылку автоматически или предложите свой вариант
     	</p>
     <div class="container">
-        <div class="row my-3">
-          <div class="col-sm">
-          </div>
-          <div class="col-md-6 mx-auto">
-            <form method="POST" novalidate>
-            
+      <div class="row my-3">
+        <div class="col-sm">
+        </div>
+        <div class="col-md-7 mx-auto">
+          <form method="POST" novalidate>
             {{ form.csrf_token }}  
             {{ form.original_link(class="form-control form-control-lg py-2 mb-3", placeholder="Длинная ссылка") }}
-            {% if form.original_link.errors %}
-              <p class="text-danger">
-                {% for error in form.original_link.errors %}
-                  {{ error }}
-                {% endfor %}
-              </p>
-            {% endif %}
+            <p class="text-danger">
+              {% for error in form.original_link.errors %}
+                {{ error }}
+              {% endfor %}
+            </p>
             {{ form.custom_id(class="form-control form-control-lg py-2 mb-3", placeholder="Ваш вариант короткой ссылки") }}
-            {% if form.custom_id.errors %}
-              <p class="text-danger text-center">
-                {% for error in form.custom_id.errors %}
-                  {{ error }}
-                {% endfor %}
-              </p>
-            {% endif %}
+            <p class="text-danger">
+              {% for error in form.custom_id.errors %}
+                {{ error }}
+              {% endfor %}
+            </p>
             {{ form.submit(class="btn btn-primary") }}
+            {% with messages = get_flashed_messages() %}
+              {% for message in messages %}
+                {{ message }}
+              {% endfor %}
+            {% endwith %}
           </form>
-				{% if short_url %}
-					<div class="row mt-4">
-					    <div class="col-md-7 mx-auto">
-					        <div class="d-flex justify-content-between align-items-center border rounded p-3">
-					            <span>Новая ссылка:</span>
-					            <a href="{{ request.host_url }}{{ short_url }}">{{ request.host_url }}{{ short_url }}</a>
-					        </div>
-					    </div>
-					</div>
-					{% endif %}
-					</div>
-					<div class="col-sm">
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
+  		    {% if short_url %}
+  			    <div class="row mt-4">
+  			      <div class="col-md-7 mx-auto">
+  			          <div class="d-flex justify-content-between align-items-center border rounded p-3">
+  			              <span>Новая ссылка:</span>
+  			              <a href="{{ short_url }}" target="_blank">{{ short_url }}</a>
+  			          </div>
+  			      </div>
+  			    </div>
+  		    {% endif %}
+  			</div>
+  			<div class="col-sm">
+  			</div>
+  		</div>
+  	</div>
+  </section>
 {% endblock content %}

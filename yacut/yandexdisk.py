@@ -7,6 +7,7 @@ import asyncio
 import urllib
 
 from . import app
+from .exceptions import YandexDiskUploadError, YandexDiskDownloadLinkError
 
 
 API_HOST = 'https://cloud-api.yandex.net/'
@@ -41,20 +42,21 @@ async def upload_file_and_get_download_url(session, file):
         params=yadisk_args
     ) as response:
         if response.status != http.HTTPStatus.OK:
-            raise Exception(
+            raise YandexDiskUploadError(
                 f'Ошибка при получении URL для загрузки: {response.status}'
             )
         data = await response.json()
-        print(data)
         upload_url = data.get('href')
         if not upload_url:
-            raise Exception('URL для загрузки не найден в ответе API.')
+            raise YandexDiskUploadError(
+                'URL для загрузки не найден в ответе API.'
+            )
         async with session.put(
             data=file.read(),
             url=upload_url
         ) as response:
             if response.status != http.HTTPStatus.CREATED:
-                raise Exception(
+                raise YandexDiskUploadError(
                     f'Ошибка при загрузке файла: {response.status}'
                 )
             location = response.headers.get('Location')
@@ -66,12 +68,14 @@ async def upload_file_and_get_download_url(session, file):
             params={'path': location}
         ) as response:
             if response.status != http.HTTPStatus.OK:
-                raise Exception(
+                raise YandexDiskDownloadLinkError(
                     f'Ошибка при получении URL для '
                     f'скачивания: {response.status}'
                 )
             data = await response.json()
             download_url = data.get('href')
             if not download_url:
-                raise Exception('URL для скачивания не найден в ответе API.')
+                raise YandexDiskDownloadLinkError(
+                    'URL для скачивания не найден в ответе API.'
+                )
             return download_url
